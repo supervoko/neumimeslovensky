@@ -66,6 +66,10 @@ def results():
     text_input_value = text_input.get("1.0", "end-1c")
     # create string with regex (?<==')(.*?)(?='>) to extract text between brackets
     text_results_value = re.findall(r'''(?<==\')(.*?)(?=\')''', str(text_input_value))
+    # this is just temporarily to test if the regex works
+    # paste text_results_value into text_results
+    text_results.insert(tk.END, text_results_value)
+
     # ____________________________________________________________________________________________________________
     # CAREFUL! I SPEND 3 HOURS ON THIS PART AND I WASN'T ABLE TO FIND A WAY TO GET IT TO WORK
     # ____________________________________________________________________________________________________________
