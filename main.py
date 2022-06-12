@@ -1,10 +1,7 @@
-# import module to make small ide with few buttons
 import tkinter as tk
-
-# import regex module to extract text between brackets
 import re
 
-# create main window
+
 window = tk.Tk()
 window.title("neumimslovensky")
 window.geometry("400x400")
@@ -35,6 +32,7 @@ def clear_text():
     text_input.delete("1.0", "end")
 
 
+# if button 3 is pressed, clear text input
 button2 = tk.Button(window, text="clear text", command=clear_text)
 button2.pack()
 
@@ -47,7 +45,7 @@ def close_window():
 button3 = tk.Button(window, text="exit", command=close_window)
 button3.pack()
 
-# TEXT INPUT
+
 # add text input with up to 10000 characters
 text_input = tk.Text(window, width=100, height=15)
 text_input.pack()
@@ -68,8 +66,9 @@ def results():
     text_input_value = text_input.get("1.0", "end-1c")
     # create string with regex (?<==')(.*?)(?='>) to extract text between brackets
     text_results_value = re.findall(r'''(?<==\')(.*?)(?=\')''', str(text_input_value))
-    
-    # CAREFULL! I SPEND 3 HOURS ON THIS PART AND I WASNT ABLE TO FIND A WAY TO GET IT TO WORK
+    # ____________________________________________________________________________________________________________
+    # CAREFUL! I SPEND 3 HOURS ON THIS PART AND I WASN'T ABLE TO FIND A WAY TO GET IT TO WORK
+    # ____________________________________________________________________________________________________________
     # I tried to use loop with two list, but it didn't work
 
     # create two lists: list1 and list2
@@ -82,7 +81,9 @@ def results():
     #     if b[i] in text_results_value_str:
     #         text_results_value_str = text_results_value_str.replace(b[i], a[i])
     # print(text_results_value_str)
-    # END OF CAREFULL PART
+    # ____________________________________________________________________________________________________________
+    # END OF CAREFUL PART
+    # ____________________________________________________________________________________________________________
 
     # create button to close results window
     button_results = tk.Button(window_results, text="close", command=window_results.destroy)
