@@ -1,6 +1,15 @@
 import tkinter as tk
 import re
 
+
+def submit_text_a():
+    a = ["věta hlavní", "věta vedlejší", "podmět", "předmět", "přívlastek shodný",
+         "přívlastek neshodný", "přísudek", "příslovečné určení místa", "příslovečné určení způsobu"]
+
+    b = ["vh", "vv", "po", "pt", "pks", "pkn", "ps", "pum", "puz"]
+    submit_text(a, b)
+
+
 window = tk.Tk()
 window.title("neumimslovensky")
 window.geometry("400x400")
@@ -22,8 +31,8 @@ def disclaimer():
 
 
 # add buttons to window
-button1 = tk.Button(window, text="disclaimer", command=disclaimer)
-button1.pack()
+button_disclaimer = tk.Button(window, text="disclaimer", command=disclaimer)
+button_disclaimer.pack()
 
 
 # create a function to clear text input
@@ -32,8 +41,8 @@ def clear_text():
 
 
 # if button 3 is pressed, clear text input
-button2 = tk.Button(window, text="clear text", command=clear_text)
-button2.pack()
+button_clear_text = tk.Button(window, text="clear text", command=clear_text)
+button_clear_text.pack()
 
 
 # if button 3 is pressed, close window
@@ -41,8 +50,8 @@ def close_window():
     window.destroy()
 
 
-button3 = tk.Button(window, text="exit", command=close_window)
-button3.pack()
+button_exit = tk.Button(window, text="exit", command=close_window)
+button_exit.pack()
 
 # add text input with up to 10000 characters
 text_input = tk.Text(window, width=100, height=15)
@@ -50,10 +59,10 @@ text_input.pack()
 
 
 # crates new window that displays a little edited text input value while
-def results():
+def results(a, b):
     window_results = tk.Tk()
     window_results.title("results")
-    window_results.geometry("400x400")
+    window_results.geometry("500x400")
     # make results window resizable
     window_results.resizable(True, True)
     # creates scrollable results window
@@ -66,13 +75,10 @@ def results():
     text_results_value = re.findall(r'''(?<==\')(.*?)(?=\')''', str(text_input_value))
     # translates abbreviations
     text_results_value_str = str(text_results_value)
-    a = ["věta hlavní", "věta vedlejší", "podmět"]
-    b = ["vh", "vv", "po"]
     for x in range(len(a)):
         text_results_value_str = text_results_value_str.replace(b[x], a[x])
     # packs translated text to output
     text_results.insert(tk.END, text_results_value_str)
-
     # create button to close results window
     button_results = tk.Button(window_results, text="close", command=window_results.destroy)
     button_results.pack()
@@ -90,16 +96,16 @@ def red_submit_button():
 
 # SUBMIT BUTTON AND TEXT INPUT CONTROL
 # if submit button is pressed, turn submit whole button color blue for 5 seconds and call submit_text_value function
-def submit_text():
+def submit_text(a, b):
     text_input_value = text_input.get("1.0", "end-1c")
     if text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[7] == "i":
         green_submit_button()
         # print("correct")
-        results()
+        results(a, b)
     elif text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[5] == "i":
         green_submit_button()
         # print("correct")
-        results()
+        results(a, b)
     else:
         red_submit_button()
         # print("incorrect")
@@ -108,7 +114,7 @@ def submit_text():
 
 # SUBMIT BUTTON
 # add button under text input to submit and store text input in variable
-button_submit = tk.Button(window, text="submit", command=submit_text)
+button_submit = tk.Button(window, text="submit", command=submit_text_a)
 button_submit.pack()
 
 # start window
