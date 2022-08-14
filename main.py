@@ -11,7 +11,7 @@ def submit_text_a():
 
 
 window = tk.Tk()
-window.title("neumimslovensky")
+window.title("neumislovensky")
 window.geometry("400x400")
 window.resizable(False, False)
 
