@@ -1,13 +1,13 @@
 import tkinter as tk
 import re
 
-def main():
-    def submit_text_a(text_input):
+def main(h):
+    def submit_text_a(h):
         a = ["věta hlavní", "věta vedlejší", "podmět", "předmět", "přívlastek shodný",
              "přívlastek neshodný", "přísudek", "příslovečné určení místa", "příslovečné určení způsobu", "doplněk"]
 
         b = ["vh", "vv", "po", "pt", "pks", "pkn", "ps", "pum", "puz", "dop"]
-        submit_text(a, b, text_input)
+        submit_text(a, b, h)
 
     window = tk.Tk()
     window.title("neumimslovensky")
@@ -35,7 +35,7 @@ def main():
     button_paste = tk.Button(window, text="paste from clipboard", command=paste_clipboard)
     button_paste.pack()
     # crates new window that displays a little edited text input value while
-    def results(a, b, text_input):
+    def results(a, b, h):
         window_results = tk.Tk()
         window_results.title("results")
         window_results.geometry("500x400")
@@ -48,11 +48,20 @@ def main():
         text_results.pack()
         text_input_value = text_input.get("1.0", "end-1c")
         # create string with regex (?<==')(.*?)(?='>) to extract text between brackets
-        text_results_value = re.findall(r'''(?<==\')(.*?)(?=\')''', str(text_input_value))
+
+        if h == 3:
+            text_results_value = str(text_input_value)
+        else:
+            text_results_value = re.findall(r'''(?<==\')(.*?)(?=\')''', str(text_input_value))
+
         # translates abbreviations
+
         text_results_value_str = str(text_results_value)
-        for x in range(len(a)):
-            text_results_value_str = text_results_value_str.replace(b[x], a[x])
+        if h == 4:
+            j = 136137138
+        else:
+            for x in range(len(a)):
+                text_results_value_str = text_results_value_str.replace(b[x], a[x])
         # packs translated text to output
         text_results.insert(tk.END, text_results_value_str)
         # create button to close results window
@@ -68,24 +77,27 @@ def main():
 
     # SUBMIT BUTTON AND TEXT INPUT CONTROL
     # if submit button is pressed, turn submit whole button color blue for 5 seconds and call submit_text_value function
-    def submit_text(a, b, text_input):
-        text_input_value = text_input.get("1.0", "end-1c")
-        if text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[7] == "i":
-            green_submit_button()
-            # print("correct")
-            results(a, b, text_input)
-        elif text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[5] == "i":
-            green_submit_button()
-            # print("correct")
-            results(a, b, text_input)
+    def submit_text(a, b, h):
+        if h < 2:
+            text_input_value = text_input.get("1.0", "end-1c")
+            if text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[7] == "i":
+                green_submit_button()
+                # print("correct")
+                results(a, b, h)
+            elif text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[5] == "i":
+                green_submit_button()
+                # print("correct")
+                results(a, b, h)
+            else:
+                red_submit_button()
+                # print("incorrect")
+                # exit()
         else:
-            red_submit_button()
-            # print("incorrect")
-            # exit()
+            results(a, b, h)
 
     # SUBMIT BUTTON
     # add button under text input to submit and store text input in variable
-    button_submit = tk.Button(window, text="submit", command=lambda:submit_text_a(text_input))
+    button_submit = tk.Button(window, text="submit", command=lambda:submit_text_a(h))
     button_submit.pack()
 
     # if button close_window is pressed, close window
@@ -100,25 +112,57 @@ def main():
     # print hello world
 
 # create disclaimer popup window with text
-def disclaimer():
-    def stupid2():
+def disclaimer(h):
+    def stupid2(h):
         window_disclaimer.destroy()
-        main()
+        main(h)
     window_disclaimer = tk.Tk()
     window_disclaimer.title("disclaimer")
     window_disclaimer.geometry("800x200")
     # make disclaimer window not resizable
     window_disclaimer.resizable(False, False)
-    # create text saying this is not intended in disclaimer window
+    # disclaimer text
     disclaimer_text = tk.Label(window_disclaimer, text="This application was created only for the purpose of improving the programming skills of the creators and at the same time as a proof of concept.\n"
                                                        " It is not intended for any use with other applications, \nservices, websites and files or text obtained from them, and such use is also prohibited by the creator. \n"
                                                        "The creators waive any responsibility for misuse of the program by the user. \n"
                                                        "By clicking the \"I agree\" button, you confirm that you will not misuse the program for any reason other than testing reasons, \nthat you take all responsibility for your use of this application and that you understand these terms.")
     disclaimer_text.pack()
-    button_disclaimer = tk.Button(window_disclaimer, text="I agree", command=stupid2)
+    button_disclaimer = tk.Button(window_disclaimer, text="I agree", command=lambda:stupid2(h))
     button_disclaimer.pack()
     window_disclaimer.mainloop()
+def debug_mode():
+    debug_mode_window = tk.Tk()
+    debug_mode_window.title("debug mode")
+    debug_mode_window.geometry("400x400")
+    debug_mode_window.resizable(False, False)
+    debug_mode_text = tk.Label(debug_mode_window, text ="Do you want to start debug mode?", font=('Arial', 18))
+    debug_mode_text2 = tk.Label(debug_mode_window, text ="(if you dont know what to select, press no. \nIf you had problems with the program before, \nI suggest using debug mode 1 or debug mode 2)", font=('Arial', 8))
+    debug_mode_text.pack()
+    debug_mode_text2.pack()
+    def func_no():
+        h = 1
+        debug_mode_window.destroy()
+        disclaimer(h)
+    def func_1():
+        h = 2
+        debug_mode_window.destroy()
+        disclaimer(h)
+    def func_2():
+        h = 3
+        debug_mode_window.destroy()
+        disclaimer(h)
+    def func_3():
+        h = 4
+        debug_mode_window.destroy()
+        disclaimer(h)
 
-
-
-disclaimer()
+    debug_mode_button_no = tk.Button(debug_mode_window, text = "no", command=func_no) # works normally
+    debug_mode_button_1 = tk.Button(debug_mode_window, text = "1", command=func_1) # ignores check for right input
+    debug_mode_button_2 = tk.Button(debug_mode_window, text = "2", command=func_2) # ignores check for right input and regex search
+    debug_mode_button_3 = tk.Button(debug_mode_window, text = "3", command=func_3) # ignores check for right input and abbreviation translation
+    debug_mode_button_no.pack()
+    debug_mode_button_1.pack()
+    debug_mode_button_2.pack()
+    debug_mode_button_3.pack()
+    debug_mode_window.mainloop()
+debug_mode()
