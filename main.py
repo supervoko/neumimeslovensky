@@ -6,7 +6,7 @@ def main():
         a = ["věta hlavní", "věta vedlejší", "podmět", "předmět", "přívlastek shodný",
              "přívlastek neshodný", "přísudek", "příslovečné určení místa", "příslovečné určení způsobu", "doplněk"]
 
-        b = ["pu", "pus", "po", "pt", "pks", "pkn", "ps", "pum", "puz", "dop"]
+        b = ["vh", "vv", "po", "pt", "pks", "pkn", "ps", "pum", "puz", "dop"]
         submit_text(a, b, text_input)
 
     window = tk.Tk()
