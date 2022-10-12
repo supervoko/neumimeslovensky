@@ -156,7 +156,7 @@ def debug_mode():
     debug_mode_text2 = tk.Label(debug_mode_window,
                                 text="(if you dont know what to select, press no. "
                                      "\nIf you had problems with the program before,"
-                                     " \nI suggest using debug mode 1 or debug mode 2)",
+                                     " \nI suggest trying all the debug modes in order.)",
                                 font=('Arial', 8))
     debug_mode_text.pack()
     debug_mode_text2.pack()
@@ -182,7 +182,7 @@ def debug_mode():
         disclaimer(is_debug_mode)
 
     # works normally
-    debug_mode_button_no = tk.Button(debug_mode_window, text="no", command=func_no)
+    debug_mode_button_no = tk.Button(debug_mode_window, text="no", command=func_no, font=('Arial', 20))
     # ignores check for right input
     debug_mode_button_1 = tk.Button(debug_mode_window, text="1", command=func_1)
     # ignores check for right input and regex search
