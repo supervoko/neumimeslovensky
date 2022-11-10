@@ -134,7 +134,7 @@ def disclaimer(is_debug_mode):
                                     " \nservices, websites "
                                     "and files or text obtained from them, and such use is "
                                     "also prohibited by the creator. \n"
-                                    "The creators waive any responsibility for misuse of the "
+                                    "The creators waive any responsibility for the misuse of the "
                                     "program by the user. \n"
                                     "By clicking the \"I agree\" button, you confirm that you"
                                     " will not misuse the program "
