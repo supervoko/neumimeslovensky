@@ -126,7 +126,7 @@ def main(is_debug_mode):
     button_exit = tk.Button(window, text="exit", command=close_window)
     button_exit.pack()
 
-    # zapne hlavní inputové
+    # zapne hlavní inputové okno
     window.mainloop()
 
 
