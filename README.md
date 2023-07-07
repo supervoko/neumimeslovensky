@@ -1,6 +1,11 @@
 # disclaimer
-This application was created only for the purpose of improving the programming skills of the creators and at the same time as a proof of concept. It is not intended for any use with other applications, services, websites and files or text obtained from them, and such use is also prohibited by the creator. The creators waive any responsibility for the misuse of the program by the user.
-By clicking the "I agree" button at the start of the program, you confirm that you will not misuse the program for any reason other than testing reasons, that you take all responsibility for your use of this application and that you understand these terms.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
 
