@@ -11,6 +11,6 @@ SOFTWARE.
 
 
 # neumimeslovensky
-basic program to extract some info from the database in basic text copy-paste format, gathered from XHR file request by a user.
+základní program pro získání určitých informací z databáze v základním textovém copy-paste formátu, získaných z XHR souboru zadaného uživatelem.
 
-After you start the program, you need to accept the disclaimer and choose if you want to use the debug mode. The rest of the program is intuitive
+Po spuštění programu je třeba přijmout prohlášení o vyloučení odpovědnosti a zvolit, zda chcete použít režim ladění. Zbytek programu je intuitivní
