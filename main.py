@@ -136,36 +136,8 @@ def main():
     # zapne hlavní inputové okno
     window.mainloop()
 
-
-# vytvoří okno pro disclaimer a ukončí okno debug módu
-def disclaimer():
-    def rundisc():
-        window_disclaimer.destroy()
-        main()
-
-    window_disclaimer = tk.Tk()
-    window_disclaimer.title("disclaimer")
-    window_disclaimer.geometry("800x200")
-    window_disclaimer.resizable(False, False)
-    # text disclaimeru
-    # bylo by vhodné mít tento text uložený v samostatném soboru, nikoliv součástí aplikace
-    disclaimer_text = tk.Label(window_disclaimer,
-                               text="""THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.""")
-    disclaimer_text.pack()
-    button_disclaimer = tk.Button(window_disclaimer, text="I agree", command=lambda: rundisc())
-    button_disclaimer.pack()
-    window_disclaimer.mainloop()
-
-
-# okno pro zvolení debug módu
-# cílem výběru debug módu je, aby si uživatel mohl zvolit, pokud mu určitá část kódu způsobuje problémy
-def debug_mode():
+# okno pro zvolení DM
+def debug_mode_choose():
     debug_mode_window = tk.Tk()
     debug_mode_window.title("debug mode")
     debug_mode_window.geometry("400x400")
@@ -178,41 +150,110 @@ def debug_mode():
                                 font=('Arial', 8))
     debug_mode_text.pack()
     debug_mode_text2.pack()
+
+    def runmain():
+        debug_mode_window.destroy()
+        main()
+
     global is_debug_mode
     is_debug_mode = 0
-    def func_no():
-        debug_mode_window.destroy()
-        disclaimer()
 
-    def func_1():
+    def DM_1():
         is_debug_mode = 1
-        debug_mode_window.destroy()
-        disclaimer()
+        runmain()
 
-    def func_2():
+    def DM_2():
         is_debug_mode = 2
-        debug_mode_window.destroy()
-        disclaimer()
+        runmain()
 
-    def func_3():
+    def DM_3():
         is_debug_mode = 3
-        debug_mode_window.destroy()
-        disclaimer()
+        runmain()
 
     # funguje normálně
-    debug_mode_button_no = tk.Button(debug_mode_window, text="no", command=func_no, font=('Arial', 20))
+    debug_mode_button_no = tk.Button(debug_mode_window, text="no", command=runmain, font=('Arial', 20))
     # ignoruje kontrolu správného inputu
-    debug_mode_button_1 = tk.Button(debug_mode_window, text="1", command=func_1)
+    debug_mode_button_1 = tk.Button(debug_mode_window, text="1", command=DM_1)
     # ignoruje kontrolu správného inputu a zároveň přeskakuje filtraci regexem
-    debug_mode_button_2 = tk.Button(debug_mode_window, text="2", command=func_2)
+    debug_mode_button_2 = tk.Button(debug_mode_window, text="2", command=DM_2)
     # ignoruje kontrolu správného inputu a zároveň přeskakuje překládání zkratek
-    debug_mode_button_3 = tk.Button(debug_mode_window, text="3", command=func_3)
+    debug_mode_button_3 = tk.Button(debug_mode_window, text="3", command=DM_3)
+
     debug_mode_button_no.pack()
     debug_mode_button_1.pack()
     debug_mode_button_2.pack()
     debug_mode_button_3.pack()
+
     debug_mode_window.mainloop()
 
 
+
+# okno pro zvolení, zda chce uživatel běžet vanilla program, či zda má zájem přejít k výběru různých DM
+def debug_mode_YN():
+    def runmain():
+        debug_mode_YN.destroy()
+        main()
+
+    def runDM():
+        debug_mode_YN.destroy()
+        debug_mode_choose()
+
+    debug_mode_YN = tk.Tk()
+    debug_mode_YN.title("Debug Mode")
+
+    debug_mode_text_YN = tk.Label(debug_mode_YN, text="Do you want to start debug mode?", font=('Arial', 18))
+    debug_mode_text_YN.grid(row=0, column=0, padx=5, pady=10, columnspan=2,)
+
+    # tlačítko 1 pro spuštění neumímeslovensky
+    button1 = tk.Button(debug_mode_YN, text="Yes", command=runmain)
+    button1.grid(row=1, column=0, padx=10, pady=5)
+
+    # tlačítko pro spuštění výběru debug módu
+    button2 = tk.Button(debug_mode_YN, text="No", command=runDM)
+    button2.grid(row=1, column=1, padx=10, pady=5)
+    # logika velikosti okna a pozici tlačítek
+    debug_mode_YN.update()  # aktualizuje okno, pro případnou úpravu jeho velikosti
+
+    label_width = debug_mode_text_YN.winfo_width()
+    button1_width = button1.winfo_width()
+    button2_width = button2.winfo_width()
+
+    max_button_width = max(button1_width, button2_width)
+
+    window_width = max(label_width, max_button_width) + 30  # přidá extra prostor
+
+    window_height = 150
+
+    debug_mode_YN.geometry(f"{window_width}x{window_height}")
+    debug_mode_YN.resizable(False, False)
+
+    debug_mode_YN.mainloop()
+
+# okno pro zobrazení prostého textu disclaimeru
+def disclaimer():
+    def runDM():
+        window_disclaimer.destroy()
+        debug_mode_YN()
+
+    window_disclaimer = tk.Tk()
+    window_disclaimer.title("disclaimer")
+    window_disclaimer.geometry("600x150")
+    window_disclaimer.resizable(False, False)
+    # text disclaimeru
+    # bylo by vhodné mít tento text uložený v samostatném soboru, nikoliv součástí aplikace
+    disclaimer_text = tk.Label(window_disclaimer,
+                               text="""THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.""")
+    disclaimer_text.pack()
+    button_disclaimer = tk.Button(window_disclaimer, text="I agree", command=runDM)
+    button_disclaimer.pack()
+    window_disclaimer.mainloop()
+
+
 # zapne výběr debug módu a tím pádem celého programu
-debug_mode()
+disclaimer()
