@@ -108,7 +108,6 @@ def main():
     def submit_text():
         text_input_value = text_input.get("1.0", "end-1c")
         # v případě zaplého debug módu je celá logika přeskočena a funkce results je zavolána okamžitě
-        print(is_debug_mode)
         if is_debug_mode < 1:
 
             if text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[7] == "i":
