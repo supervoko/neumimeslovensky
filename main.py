@@ -10,6 +10,7 @@
 # importuje nutné moduly
 import tkinter as tk  # pro práci s okny
 import re  # pro získání důležitých dat z inputu
+from tkinter import messagebox # pro error handeling s chybovou hláškou
 
 # každá hodnota každého indexu listu A koresponduje s hodnotou stejného indexu listu B
 # jedná se jednoduchou databázi, pomocí které program
@@ -39,12 +40,14 @@ def main():
     button_clear_text = tk.Button(window, text="clear text", command=clear_text)
     button_clear_text.pack()
 
-    # funkce a tlačítko pro zavolání funkce pro
-    # vložení schránky do inputu
+    # funkce a tlačítko pro zavolání funkce pro vložení schránky do inputu
     # POTENCIÁLNÍ PORUŠENÍ BEZPEČNOSTI A NARUŠENÍ SOUKROMÍ
     def paste_clipboard():
-        clipboard_text = window.clipboard_get()
-        text_input.insert(tk.END, clipboard_text)
+        try:
+            clipboard_text = window.clipboard_get()
+            text_input.insert(tk.END, clipboard_text)
+        except tk.TclError: # v případě problému se schránkou handelne error chybovou hláškou
+            messagebox.showwarning("Clipboard Error", "Clipboard is empty or unavailable.")
 
     button_paste = tk.Button(window, text="paste from clipboard", command=paste_clipboard)
     button_paste.pack()
@@ -92,7 +95,7 @@ def main():
     def green_submit_button():
         button_submit.config(fg="green")
         button_submit.after(500, lambda: button_submit.config(fg="black"))
-
+        results()
     # funkce pro změnu barvy tlačítka v případě pravděpodobně špatného inputu
     def red_submit_button():
         button_submit.config(fg="red")
@@ -105,21 +108,20 @@ def main():
     def submit_text():
         text_input_value = text_input.get("1.0", "end-1c")
         # v případě zaplého debug módu je celá logika přeskočena a funkce results je zavolána okamžitě
-        if is_debug_mode << 1:
+        print(is_debug_mode)
+        if is_debug_mode < 1:
 
             if text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[7] == "i":
                 green_submit_button()
-                results()
 
             elif text_input_value.startswith("{") and text_input_value.endswith("}") and text_input_value[5] == "i":
                 green_submit_button()
-                results()
 
             else:
                 red_submit_button()
 
         else:
-            results()
+            green_submit_button()
 
     # tlačítko submit
     # vloží input do proměné a zavolá logiku pro schvalování inputu
@@ -159,14 +161,17 @@ def debug_mode_choose():
     is_debug_mode = 0
 
     def DM_1():
+        global is_debug_mode
         is_debug_mode = 1
         runmain()
 
     def DM_2():
+        global is_debug_mode
         is_debug_mode = 2
         runmain()
 
     def DM_3():
+        global is_debug_mode
         is_debug_mode = 3
         runmain()
 
@@ -190,6 +195,8 @@ def debug_mode_choose():
 
 # okno pro zvolení, zda chce uživatel běžet vanilla program, či zda má zájem přejít k výběru různých DM
 def debug_mode_YN():
+    global is_debug_mode
+    is_debug_mode = 0
     def runmain():
         debug_mode_YN.destroy()
         main()
@@ -255,5 +262,5 @@ SOFTWARE.""")
     window_disclaimer.mainloop()
 
 
-# zapne výběr debug módu a tím pádem celého programu
+# zapne okno disclaimeru a tím pádem celého programu
 disclaimer()
