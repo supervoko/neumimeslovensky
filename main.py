@@ -143,12 +143,9 @@ def debug_mode_choose():
     debug_mode_window.title("debug mode")
     debug_mode_window.geometry("400x400")
     debug_mode_window.resizable(False, False)
-    debug_mode_text = tk.Label(debug_mode_window, text="Do you want to start debug mode?", font=('Arial', 18))
+    debug_mode_text = tk.Label(debug_mode_window, text="select debug mode", font=('Arial', 18))
     debug_mode_text2 = tk.Label(debug_mode_window,
-                                text="(if you dont know what to select, press no. "
-                                     "\nIf you had problems with the program before,"
-                                     " \nI suggest trying all the debug modes in order.)",
-                                font=('Arial', 8))
+                                text="PLACEHOLDERTEXT",font=('Arial', 8))
     debug_mode_text.pack()
     debug_mode_text2.pack()
 
@@ -175,13 +172,13 @@ def debug_mode_choose():
         runmain()
 
     # funguje normálně
-    debug_mode_button_no = tk.Button(debug_mode_window, text="no", command=runmain, font=('Arial', 20))
+    debug_mode_button_no = tk.Button(debug_mode_window, text="none", command=runmain, font=('Arial', 20))
     # ignoruje kontrolu správného inputu
-    debug_mode_button_1 = tk.Button(debug_mode_window, text="1", command=DM_1)
+    debug_mode_button_1 = tk.Button(debug_mode_window, text="DM 1", command=DM_1)
     # ignoruje kontrolu správného inputu a zároveň přeskakuje filtraci regexem
-    debug_mode_button_2 = tk.Button(debug_mode_window, text="2", command=DM_2)
+    debug_mode_button_2 = tk.Button(debug_mode_window, text="DM 2", command=DM_2)
     # ignoruje kontrolu správného inputu a zároveň přeskakuje překládání zkratek
-    debug_mode_button_3 = tk.Button(debug_mode_window, text="3", command=DM_3)
+    debug_mode_button_3 = tk.Button(debug_mode_window, text="DM 3", command=DM_3)
 
     debug_mode_button_no.pack()
     debug_mode_button_1.pack()
@@ -211,11 +208,11 @@ def debug_mode_YN():
     debug_mode_text_YN.grid(row=0, column=0, padx=5, pady=10, columnspan=2,)
 
     # tlačítko 1 pro spuštění neumímeslovensky
-    button1 = tk.Button(debug_mode_YN, text="Yes", command=runmain)
+    button1 = tk.Button(debug_mode_YN, text="No", command=runmain)
     button1.grid(row=1, column=0, padx=10, pady=5)
 
     # tlačítko pro spuštění výběru debug módu
-    button2 = tk.Button(debug_mode_YN, text="No", command=runDM)
+    button2 = tk.Button(debug_mode_YN, text="Yes", command=runDM)
     button2.grid(row=1, column=1, padx=10, pady=5)
     # logika velikosti okna a pozici tlačítek
     debug_mode_YN.update()  # aktualizuje okno, pro případnou úpravu jeho velikosti
