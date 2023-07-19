@@ -54,30 +54,30 @@ def main():
 
     # vznik okna pro zobrazení výstupu
     def results():
-        window_results = tk.Tk()
+        window_results = tk.Toplevel()
         window_results.title("results")
         window_results.geometry("500x400")
         window_results.resizable(True, True)
-        scrollbar = tk.Scrollbar(window_results)  # přidá scrollbar
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)  # přidá scrollbar
-        text_results = tk.Text(window_results, width=130, height=400)
-        text_results.pack()
+        scrollbar = tk.Scrollbar(window_results) # scrollbar v okně s outputem
+        scrollbar.pack(side=tk.RIGHT, fill=tk.Y) # položí scrollbar na pravou stranu okna
+        text_results = tk.Text(window_results, width=130, height=23)
+        text_results.pack(fill=tk.BOTH)
         # __________________________________________________________________________________________
-        text_input_value = text_input.get("1.0", "end-1c")  # vytvoření krátkodobé proměné pro práci s ní
+        text_input_value = text_input.get("1.0", "end-1c")  # uložení textu vloženého uživatelem do krátkodobé proměné
 
         # za pomoci regexu (?<==')(.*?)(?='>) extrahuje pouze důležitý text
 
-        if is_debug_mode == 2:  # v případě zapnutého debug módu proces přeskočí
+        if is_debug_mode == 2:  # v případě zapnutého DM 2 proces přeskočí
             text_results_value = str(text_input_value)
         else:
-            # za pomoci regexu nalezne všechna důležitá data a uschová je do krátkodobé proměn
+            # regexem nalezne všechna důležitá data a uschová je do krátkodobé proměn
             text_results_value = re.findall(r'''(?<==\')(.*?)(?=\')''', str(text_input_value))
 
         # překládá zkratková slova za pomoci listu A a listu B
 
         # NÁSLEDUJÍCÍ ŘÁDEK NEGATIVNĚ OVLIVŇUJE OUTPUT, NEBOŤ PO SOBĚ ZANECHÁVÁ PO SOBĚ PRVKY LISTU VE FORMĚ STRINGU
         text_results_value_str = str(text_results_value)  # změní list dat na string pro lepší manipulaci
-        # přeskočí krok, pokud je zapnutý debug mód
+        # přeskakuje s DM 3
         if is_debug_mode == 3:
             pass
         else:
@@ -85,10 +85,19 @@ def main():
             # a nahradí hodnotu toho indexu za hodnotu stejného indexu v listu a
             for x in range(len(a)):
                 text_results_value_str = text_results_value_str.replace(b[x], a[x])
+
         # strčí výsledek do dříve vytvořeného okna
         text_results.insert(tk.END, text_results_value_str)
         # tlačítko pro zavření okna
-        button_results = tk.Button(window_results, text="close", command=window_results.destroy)
+        def close_result_window():
+            window_results.destroy()
+            new_window = tk.Toplevel()
+            new_window.title("Thank You")
+            label = tk.Label(new_window, text="Thank you for using this program")
+            label.pack()
+            new_window.after(1000, new_window.destroy) # po 1s ukončí okno
+
+        button_results = tk.Button(window_results, text="close", command=close_result_window)
         button_results.pack()
 
     # funkce pro změnu barvy tlačítka v případě správného inputu
@@ -153,37 +162,28 @@ def debug_mode_choose():
         debug_mode_window.destroy()
         main()
 
-    global is_debug_mode
-    is_debug_mode = 0
+    def runmain():
+        debug_mode_window.destroy()
+        main()
 
-    def DM_1():
+    def set_debug_mode(mode):
         global is_debug_mode
-        is_debug_mode = 1
+        is_debug_mode = mode
         runmain()
 
-    def DM_2():
-        global is_debug_mode
-        is_debug_mode = 2
-        runmain()
+    button_configurations = [
+          {"text": "none", "command": lambda: set_debug_mode(0)},
+          {"text": "DM 1", "command": lambda: set_debug_mode(1)},
+          {"text": "DM 2", "command": lambda: set_debug_mode(2)},
+          {"text": "DM 3", "command": lambda: set_debug_mode(3)}
+    ]
 
-    def DM_3():
-        global is_debug_mode
-        is_debug_mode = 3
-        runmain()
-
-    # funguje normálně
-    debug_mode_button_no = tk.Button(debug_mode_window, text="none", command=runmain, font=('Arial', 20))
-    # ignoruje kontrolu správného inputu
-    debug_mode_button_1 = tk.Button(debug_mode_window, text="DM 1", command=DM_1)
-    # ignoruje kontrolu správného inputu a zároveň přeskakuje filtraci regexem
-    debug_mode_button_2 = tk.Button(debug_mode_window, text="DM 2", command=DM_2)
-    # ignoruje kontrolu správného inputu a zároveň přeskakuje překládání zkratek
-    debug_mode_button_3 = tk.Button(debug_mode_window, text="DM 3", command=DM_3)
-
-    debug_mode_button_no.pack()
-    debug_mode_button_1.pack()
-    debug_mode_button_2.pack()
-    debug_mode_button_3.pack()
+     # za pomoci loopu vytvoří všechny buttony
+    debug_mode_buttons = []
+    for config in button_configurations:
+        button = tk.Button(debug_mode_window, **config)
+        debug_mode_buttons.append(button)
+        button.pack()
 
     debug_mode_window.mainloop()
 
@@ -207,7 +207,7 @@ def debug_mode_YN():
     debug_mode_text_YN = tk.Label(debug_mode_YN, text="Do you want to start debug mode?", font=('Arial', 18))
     debug_mode_text_YN.grid(row=0, column=0, padx=5, pady=10, columnspan=2,)
 
-    # tlačítko 1 pro spuštění neumímeslovensky
+    # spouští hlavní část programu
     button1 = tk.Button(debug_mode_YN, text="No", command=runmain)
     button1.grid(row=1, column=0, padx=10, pady=5)
 
