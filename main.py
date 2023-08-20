@@ -172,10 +172,10 @@ def debug_mode_choose():
         runmain()
 
     button_configurations = [
-          {"text": "none", "command": lambda: set_debug_mode(0)},
-          {"text": "DM 1", "command": lambda: set_debug_mode(1)},
-          {"text": "DM 2", "command": lambda: set_debug_mode(2)},
-          {"text": "DM 3", "command": lambda: set_debug_mode(3)}
+          {"text": "none", "command": lambda: set_debug_mode(0)}, # funguje normálně
+          {"text": "DM 1", "command": lambda: set_debug_mode(1)}, # ignoruje kontrolu správného inputu
+          {"text": "DM 2", "command": lambda: set_debug_mode(2)}, # ignoruje kontrolu správného inputu a zároveň přeskakuje filtraci regexem
+          {"text": "DM 3", "command": lambda: set_debug_mode(3)}  # ignoruje kontrolu správného inputu a zároveň přeskakuje překládání zkratek
     ]
 
      # za pomoci loopu vytvoří všechny buttony
